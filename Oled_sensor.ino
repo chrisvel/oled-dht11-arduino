@@ -1,7 +1,6 @@
 /*
 
   Oled sensor
-  
   Copyright (c) me, myself and I
   
 */
@@ -9,6 +8,7 @@
 #include "U8glib.h"
 #include <dht11.h>
 #include <MemoryFree.h>
+#include "LowPower.h"
 
 dht11 DHT11;
 #define DHT11PIN 4
@@ -32,6 +32,7 @@ void setup(void) {
 }
 
 void loop(void) {
+  digitalWrite(13, HIGH);
     
   int chk = DHT11.read(DHT11PIN);
 
@@ -80,8 +81,8 @@ void loop(void) {
        u8g.print(freeMemory());
   } while( u8g.nextPage() );
   
-  digitalWrite(13, LOW);  
-  delay(1000);           
-  digitalWrite(13, HIGH);
+  delay(1000);    
+  digitalWrite(13, LOW);     
+  LowPower.idle(SLEEP_8S, ADC_OFF, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_OFF, TWI_OFF);   
 }
 
